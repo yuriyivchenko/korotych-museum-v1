@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Музей вчителя v1.3 - Повний зал</title>
+    <style>
+        :root {
+            --bg: #f4f4f4;
+            --wall: #e0e0e0;
+            --accent: #2c3e50;
+            --card: #fff;
+            --shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        body { margin: 0; font-family: system-ui, -apple-system, sans-serif; background: var(--bg); }
+
+        header {
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: space-around;
+            padding: 20px; background: #222; color: #fff; text-align: center;
+        }
+
+        .header-info { background: var(--card); padding: 10px; color: #333; border-left: 4px solid #777; border-radius: 4px; }
+
+        main { display: flex; flex-wrap: wrap; gap: 15px; padding: 15px; justify-content: center; }
+
+        .wall { background: var(--wall); padding: 15px; flex: 1 1 250px; border-radius: 8px; }
+        .wall h2 { text-align: center; font-size: 1.2rem; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+
+        .poster {
+            background: var(--card); margin: 10px 0; padding: 10px; text-align: center;
+            border-left: 4px solid var(--accent); cursor: pointer; transition: 0.2s;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+        }
+        .poster:hover { transform: scale(1.02); box-shadow: var(--shadow); }
+        .poster img { max-width: 100%; border-radius: 2px; }
+
+        /* Центр з 5 стійками */
+        .center {
+            background: #ddd; display: flex; flex-wrap: wrap; 
+            justify-content: center; gap: 15px; padding: 20px; width: 100%; border-radius: 10px;
+        }
+
+        .stand {
+            flex: 1 1 180px; max-width: 250px; background: var(--card);
+            border: 2px solid var(--accent); padding: 10px; border-radius: 5px;
+        }
+        .stand h3 { text-align: center; margin-top: 0; font-size: 1rem; color: #c0392b; }
+
+        .exhibit {
+            border-top: 1px solid #eee; padding: 8px 5px; font-size: 14px; cursor: pointer;
+        }
+        .exhibit:hover { background: #f9f9f9; }
+
+        /* Модалка */
+        .modal {
+            display: none; position: fixed; z-index: 1000; left: 0; top: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px);
+        }
+        .modal-content {
+            background: #fff; margin: 5% auto; padding: 20px; border-radius: 12px;
+            width: 90%; max-width: 500px; position: relative; text-align: center;
+        }
+        .close { position: absolute; right: 20px; top: 10px; font-size: 30px; cursor: pointer; }
+
+        footer {
+            display: flex; flex-wrap: wrap; justify-content: space-around; align-items: center;
+            padding: 20px; background: #222; color: #fff; font-size: 13px;
+        }
+
+        @media (max-width: 768px) { .wall, .stand { flex: 1 1 100%; } }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-info">
+        <img src="posters/logo.png" width="130"><br>Коротичанський ліцей
+    </div>
+    <h1>Музей вчителя</h1>
+    <small>v1.3 (5 стійок + Модалки)</small>
+</header>
+
+<main>
+    <aside class="wall">
+        <h2>Стіна 1</h2>
+        <div class="poster" data-desc="Опис експоната 1"><img src="posters/proto-exponat.png">Експонат 1</div>
+        <div class="poster" data-desc="Опис експоната 2"><img src="posters/proto-exponat.png">Експонат 2</div>
+    </aside>
+ <aside class="wall">
+        <h2>Стіна 2</h2>
+        <div class="poster" data-desc="Опис експоната 3"><img src="posters/proto-exponat.png">Експонат 3</div>
+<div class="poster" data-desc="Опис експоната 4"><img src="posters/proto-exponat.png">Експонат 4</div>
+<div class="poster" data-desc="Опис експоната 5"><img src="posters/proto-exponat.png">Експонат 5</div>
+    </aside>
+    <section class="center">
+        <div class="stand">
+            <h3>Стійка 1</h3>
+            <div class="poster" data-desc="Деталі плакату 1"><img src="posters/proto-exponat.png">Плакат 1</div>
+            <div class="poster" data-desc="Деталі плакату 2"><img src="posters/proto-exponat.png">Плакат 2</div>
+        </div>
+
+        <div class="stand">
+            <h3>Стійка 2</h3>
+            <div class="exhibit poster" data-desc="Історія старого журналу">📜 Класний журнал</div>
+            <div class="exhibit poster" data-desc="Методичка 1970 року">📖 Методичка</div>
+        </div>
+
+        <div class="stand">
+            <h3>Стійка 3</h3>
+            <div class="exhibit poster" data-desc="Предмет №3">🔎 Експонат А</div>
+            <div class="exhibit poster" data-desc="Предмет №4">🔎 Експонат Б</div>
+        </div>
+
+        <div class="stand">
+            <h3>Стійка 4</h3>
+            <div class="exhibit poster" data-desc="Артефакт №5">📦 Колекція 1</div>
+            <div class="exhibit poster" data-desc="Артефакт №6">📦 Колекція 2</div>
+        </div>
+
+        <div class="stand">
+            <h3>Стійка 5</h3>
+            <div class="exhibit poster" data-desc="Опис останньої стійки">📌 Фотоархів</div>
+        </div>
+    </section>
+
+    <aside class="wall">
+        <h2>Стіна 3</h2>
+        <div class="poster" data-desc="Опис експоната 6"><img src="posters/proto-exponat.png">Експонат 6</div>
+<div class="poster" data-desc="Опис експоната 7"><img src="posters/proto-exponat.png">Експонат 7</div>
+    </aside> <aside class="wall">
+        <h2>Стіна 4</h2>
+        <div class="poster" data-desc="Опис експоната 8"><img src="posters/proto-exponat.png">Експонат 8</div>
+        <div class="poster" data-desc="Опис експоната 9"><img src="posters/proto-exponat.png">Експонат 9</div>
+
+    </aside>
+</main>
+
+<footer>
+    <div>© 2026 Коротич. Музей вчителя.</div>
+    <div>Тел: +380 12 345 6789</div>
+    <div>email: museum@example.com</div>
+</footer>
+
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <img id="mImg" src="" style="max-width:100%; border-radius:8px;">
+        <h2 id="mTitle"></h2>
+        <p id="mDesc"></p>
+    </div>
+</div>
+
+<script>
+    const modal = document.getElementById("myModal");
+    const span = document.getElementsByClassName("close")[0];
+
+    document.querySelectorAll('.poster').forEach(item => {
+        item.addEventListener('click', () => {
+            const img = item.querySelector('img') ? item.querySelector('img').src : "";
+            const title = item.innerText;
+            const desc = item.getAttribute('data-desc') || "Додаткова інформація відсутня.";
+
+            document.getElementById("mImg").src = img;
+            document.getElementById("mImg").style.display = img ? "block" : "none";
+            document.getElementById("mTitle").innerText = title;
+            document.getElementById("mDesc").innerText = desc;
+            
+            modal.style.display = "block";
+        });
+    });
+
+    span.onclick = () => modal.style.display = "none";
+    window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; }
+</script>
+
+</body>
+</html>
